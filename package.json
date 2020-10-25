@@ -1,0 +1,29 @@
+{
+  "name": "node-red-laravel-websockets",
+  "version": "0.0.1",
+  "description": "Node Red Laravel Websockets",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abewartech/node-red-laravel-websockets.git"
+  },
+  "keywords": [
+    "node-red",
+    "laravel",
+    "laravel-websockets",
+    "node-red-laravel-websokets"
+  ],
+  "author": "abewartech",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abewartech/node-red-laravel-websockets/issues"
+  },
+  "homepage": "https://github.com/abewartech/node-red-laravel-websockets#readme",
+  "dependencies": {
+    "pusher": "^4.0.0",
+    "pusher-client": "^1.1.0"
+  }
+}
