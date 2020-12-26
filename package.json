@@ -25,5 +25,10 @@
   "dependencies": {
     "pusher": "^4.0.0",
     "pusher-client": "^1.1.0"
+  },
+  "node-red": {
+    "nodes": {
+      "sample": "sample/sample.js"
+    }
   }
 }
