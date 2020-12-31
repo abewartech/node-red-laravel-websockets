@@ -28,7 +28,7 @@
   },
   "node-red": {
     "nodes": {
-      "sample": "sample/sample.js"
+      "sample": "pusher.js"
     }
   }
 }
