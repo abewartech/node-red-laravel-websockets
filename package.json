@@ -1,8 +1,8 @@
 {
   "name": "node-red-laravel-websockets",
-  "version": "0.0.2",
-  "description": "Node Red Laravel Websockets",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Node-RED nodes to send and receive messages using Laravel WebSockets.",
+  "main": "pusher.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,7 +14,7 @@
     "node-red",
     "laravel",
     "laravel-websockets",
-    "node-red-laravel-websokets"
+    "node-red-laravel-websockets"
   ],
   "author": "abewartech",
   "license": "ISC",
@@ -23,12 +23,16 @@
   },
   "homepage": "https://github.com/abewartech/node-red-laravel-websockets#readme",
   "dependencies": {
-    "pusher": "^4.0.0",
-    "pusher-client": "^1.1.0"
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=8"
   },
   "node-red": {
     "nodes": {
-      "sample": "pusher.js"
+      "laravel-websockets": "pusher.js"
     }
   }
 }
