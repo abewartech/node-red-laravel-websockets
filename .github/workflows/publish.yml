@@ -3,13 +3,13 @@ name: Publish
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,7 +19,7 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: |
-          printf '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}\n' > ~/.npmrc
-          npm publish --registry https://npm.pkg.github.com
+          printf '//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}\n' > ~/.npmrc
+          npm publish --registry https://registry.npmjs.org --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
