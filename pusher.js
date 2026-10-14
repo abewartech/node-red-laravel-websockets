@@ -109,16 +109,27 @@ module.exports = function (RED) {
 
     node.on("input", function (msg) {
       var channel = msg.channel || node.channel;
-      var eventname = msg.eventname || node.eventname;
+      // Help text promises msg.topic as event fallback — honour it.
+      var eventname = msg.eventname || msg.topic || node.eventname;
 
       if (!channel || !eventname) {
         node.error("Channel and event name must be set either in node config or msg");
         return;
       }
 
-      pusherd.trigger(channel, eventname, {
-        payload: msg.payload,
-      });
+      // trigger() returns a Promise; a dead/unreachable server must not
+      // become an unhandled rejection — surface it via node.error.
+      try {
+        Promise.resolve(
+          pusherd.trigger(channel, eventname, {
+            payload: msg.payload,
+          }),
+        ).catch(function (err) {
+          node.error("Failed to trigger event '" + eventname + "': " + (err && err.message ? err.message : err), msg);
+        });
+      } catch (err) {
+        node.error("Failed to trigger event '" + eventname + "': " + (err && err.message ? err.message : err), msg);
+      }
     });
 
     node.on("close", function () {
