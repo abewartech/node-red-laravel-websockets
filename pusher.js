@@ -10,6 +10,10 @@ module.exports = function (RED) {
     this.channel = n.channel;
     this.eventname = n.eventname;
     this.cluster = n.cluster || "mt1";
+    // Self-hosted Laravel WebSockets endpoint (empty = Pusher cloud).
+    this.wsHost = (n.wsHost || "").trim();
+    this.wsPort = n.wsPort || "6001";
+    this.useTLS = !!n.useTLS;
     var node = this;
     var credentials = this.credentials;
 
@@ -20,11 +24,24 @@ module.exports = function (RED) {
       return;
     }
 
-    // create a subscription to the channel and event defined by user
-    var socket = new PusherClient("" + node.appkey, {
-      cluster: node.cluster,
-      forceTLS: true,
-    });
+    // Create a subscription to the channel and event defined by user.
+    // wsHost set → self-hosted Laravel WebSockets (ws/wss, no Pusher cloud).
+    // Otherwise keep the previous behaviour: Pusher cloud via cluster.
+    var clientOptions;
+    if (node.wsHost) {
+      clientOptions = {
+        wsHost: node.wsHost,
+        wsPort: parseInt(node.wsPort, 10) || 6001,
+        forceTLS: node.useTLS,
+        disableStats: true,
+      };
+    } else {
+      clientOptions = {
+        cluster: node.cluster,
+        forceTLS: true,
+      };
+    }
+    var socket = new PusherClient("" + node.appkey, clientOptions);
 
     var chan = socket.subscribe("" + node.channel);
     chan.bind("" + node.eventname, function (data) {

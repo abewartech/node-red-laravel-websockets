@@ -22,6 +22,18 @@
      </select>
   </div>
   <div class="form-row">
+     <label for="node-input-wsHost"><i class="fa fa-server"></i> WS Host</label>
+     <input type="text" id="node-input-wsHost" placeholder="127.0.0.1 (kosong = Pusher cloud)">
+  </div>
+  <div class="form-row">
+     <label for="node-input-wsPort"><i class="fa fa-plug"></i> WS Port</label>
+     <input type="number" id="node-input-wsPort" placeholder="6001">
+  </div>
+  <div class="form-row">
+     <label for="node-input-useTLS"><i class="fa fa-lock"></i> Use TLS (wss)</label>
+     <input type="checkbox" id="node-input-useTLS" style="width:auto">
+  </div>
+  <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
     <input type="text" id="node-input-name" placeholder="Name">
   </div>
@@ -30,6 +42,7 @@
 <script type="text/x-red" data-help-name="pusher in">
     <p>Pusher input mode. Use this node to subscribe to a Pusher channel/event.</p>
     <p>You need a valid Pusher App key.</p>
+    <p>Self-hosted Laravel WebSockets: set WS Host (e.g. <code>127.0.0.1</code>) and WS Port (default <code>6001</code>). Leave WS Host empty to use Pusher cloud via Cluster.</p>
 </script>
 
 <script type="text/javascript">
@@ -40,7 +53,10 @@
             name: {value:""},
             channel: {value:"", required:true},
             cluster: {value:"mt1"},
-            eventname: {value:"", required:true}
+            eventname: {value:"", required:true},
+            wsHost: {value:""},
+            wsPort: {value:"6001"},
+            useTLS: {value:false}
         },
         credentials: {
             pusherappkeysub: {type:"text"}
